@@ -34,7 +34,10 @@ public function save(){
 public static function getall(){
 
     global $db;
-    $data= $db->query("SELECT * FROM users");
+    $stmt = $db->prepare("SELECT * FROM users");
+    $stmt->execute();
+    $data = $stmt->get_result();
+
     $html = "<table>";
     $roles = [
     1 => 'Admin',
@@ -52,7 +55,7 @@ public static function getall(){
     <td>{$role_name}</td>
     <td>
         <a href='manage.php?EditId={$row->id}'>Edit</a> |
-        <a href='manage.php?id={$row->id}' onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+        <a href='manage.php?id={$row->id}'>Delete</a>
     </td>
 </tr>";
     }
@@ -102,6 +105,7 @@ public function update(){
 
 
 }
+
 
 
 
